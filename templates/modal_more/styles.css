@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .cabin-modal {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 700px;
+    max-width: 90%;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .cabin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .cabin-header h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: bold;
+  }
+  
+  .close-btn {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .cabin-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .cabin-image img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .cabin-details, .cabin-amenities {
+    flex: 1;
+  }
+  
+  .cabin-details h3, .cabin-amenities h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+  }
+  
+  .cabin-details p, .cabin-amenities ul {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .cabin-amenities ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .cabin-amenities ul li {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .cabin-amenities ul li i {
+    color: green;
+    margin-right: 8px;
+    font-size: 16px;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  

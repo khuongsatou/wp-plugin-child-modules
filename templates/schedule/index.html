@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch trình Du thuyền</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Lịch trình</h2>
+
+        <div class="cruise-schedule">
+            <h3>Du Thuyền Maya Cruises 2 ngày</h3>
+            <div class="schedule-item">
+                <div class="day-toggle" onclick="toggleSchedule('day1')">
+                    Ngày 1: ngày 1
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="day1" class="schedule-content">
+                    <ul>
+                        <li>07h00: Quý khách tham gia khóa "Thái Cực Quyền" trong 30 phút.</li>
+                        <li>08h00: Quý khách thưởng thức bữa sáng.</li>
+                        <li>09h00: Chuyển sang tàu nhỏ tham hang Sáng, hang Tối...</li>
+                        <!-- Thêm các mục khác -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="day-toggle" onclick="toggleSchedule('day2')">
+                    Ngày 2: ngày 2
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="day2" class="schedule-content">
+                    <ul>
+                        <li>11h30: Quay trở lại du thuyền nghỉ ngơi.</li>
+                        <!-- Thêm các mục khác -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cruise-schedule">
+            <h3>Du Thuyền Maya Cruises 3 ngày</h3>
+            <div class="location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Điểm đến: Hạ Long</span>
+            </div>
+
+            <div class="schedule-item">
+                <div class="day-toggle" onclick="toggleSchedule('itinerary1')">
+                    Ngày 1: Hành trình 1
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="itinerary1" class="schedule-content">
+                    <!-- Nội dung lịch trình 1 -->
+                </div>
+            </div>
+
+            <div class="schedule-item">
+                <div class="day-toggle" onclick="toggleSchedule('itinerary2')">
+                    Ngày 2: Hành trình ngày 2
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="itinerary2" class="schedule-content">
+                    <!-- Nội dung lịch trình 2 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

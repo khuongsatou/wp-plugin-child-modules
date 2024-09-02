@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.review-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2, h3 {
+    margin-bottom: 10px;
+}
+
+.rating-input {
+    margin-bottom: 20px;
+}
+
+.stars i {
+    color: #FFD700;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.stars i:hover {
+    transform: scale(1.2);
+}
+
+textarea {
+    width: calc(100% - 10px);
+    height: 60px;
+    padding: 5px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.overall-rating {
+    margin-top: 20px;
+}
+
+.overall-score {
+    display: flex;
+    align-items: center;
+}
+
+.score {
+    font-size: 2em;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.star-display i {
+    color: #FFD700;
+    margin-right: 3px;
+}
+
+.rating-details {
+    margin-top: 10px;
+}
+
+.rating-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.rating-item .rating-bar {
+    flex: 1;
+    height: 8px;
+    background-color: #e0e0e0;
+    margin: 0 10px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.rating-item .rating-bar.filled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFD700;
+}
+
+.detailed-reviews {
+    margin-top: 20px;
+}
+
+.review {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-date {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.review-text {
+    margin-top: 5px;
+}

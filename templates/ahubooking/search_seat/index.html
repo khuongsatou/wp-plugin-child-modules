@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Booking Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="input-group">
+                <i class="fas fa-users"></i>
+                <select id="people" class="input-field">
+                    <option value="1">Người lớn x 1</option>
+                    <option value="2">Người lớn x 2</option>
+                    <option value="3">Người lớn x 3</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="date" class="input-field" value="2024-09-03">
+            </div>
+            <button class="check-button">Kiểm tra</button>
+        </div>
+        
+        <div class="content">
+            <h3>Hà Nội - Mộc Châu - Lên Núi</h3>
+            <p class="contact-info">Liên lạc với chúng tôi để biết thêm thông tin</p>
+            <div class="tour-selection">
+                <div class="tour-type">
+                    <label for="tour-type">Chọn loại hình tour:</label>
+                    <select id="tour-type">
+                        <option value="tiết-kiệm">Tiết kiệm</option>
+                    </select>
+                </div>
+                <div class="price-details">
+                    <p>Chi tiết giá</p>
+                    <p>1 Người lớn</p>
+                </div>
+            </div>
+            <button class="contact-button">Liên hệ</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

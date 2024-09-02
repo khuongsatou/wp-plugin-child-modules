@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="review-container">
+        <h2>Đánh giá</h2>
+        <div class="rating-input">
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+            </div>
+            <textarea placeholder="Viết đánh giá về dịch vụ của chúng tôi hoặc chia sẻ trải nghiệm của bạn về chuyến du lịch này."></textarea>
+            <button class="submit-btn">Đánh giá</button>
+        </div>
+        <p>Bạn đã có tài khoản? Vui lòng <a href="#">Đăng nhập</a> hoặc <a href="#">Đăng ký</a> để gửi đánh giá.</p>
+
+        <div class="overall-rating">
+            <h3>Đánh giá tổng thể</h3>
+            <div class="overall-score">
+                <span class="score">4.0</span>
+                <div class="star-display">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <span>1 đánh giá</span>
+            </div>
+            <div class="rating-details">
+                <div class="rating-item">
+                    <span>Tuyệt vời</span>
+                    <div class="rating-bar"></div>
+                    <span>0</span>
+                </div>
+                <div class="rating-item">
+                    <span>Rất tốt</span>
+                    <div class="rating-bar filled"></div>
+                    <span>1</span>
+                </div>
+                <div class="rating-item">
+                    <span>Bình thường</span>
+                    <div class="rating-bar"></div>
+                    <span>0</span>
+                </div>
+                <div class="rating-item">
+                    <span>Tạm được</span>
+                    <div class="rating-bar"></div>
+                    <span>0</span>
+                </div>
+                <div class="rating-item">
+                    <span>Không thích</span>
+                    <div class="rating-bar"></div>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detailed-reviews">
+            <h3>Đánh giá chi tiết</h3>
+            <div class="review">
+                <div class="review-header">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <span class="review-date">15 Tháng 6, 2021</span>
+                </div>
+                <p class="review-text">Tôi rất hài lòng với chuyến đi này! Cảm ơn các bạn rất nhiều.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

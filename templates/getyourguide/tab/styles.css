@@ -1,0 +1,140 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    position: relative;
+    height: 60vh;
+    background: url('du_thuyen_paradise_elegance.jpeg') no-repeat center center/cover;
+    background-size: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.6) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.content {
+    color: white;
+    padding: 50px;
+    text-align: left;
+    animation: fadeIn 2s ease-out;
+}
+
+.content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.learn-more {
+    color: white;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-bottom: 2px solid white;
+    transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.learn-more:hover {
+    color: #FFD700;
+    border-bottom-color: #FFD700;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.menu-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.menu-btn i {
+    margin-right: 10px;
+}
+
+.menu-btn:hover,
+.menu-btn.active {
+    background-color: #FFD700;
+    color: black;
+    transform: scale(1.1);
+}
+
+#tab-content {
+    padding: 60px;
+    text-align: center;
+    background: url('du_thuyen_paradise_elegance.jpeg') no-repeat center center/cover;
+    background-size: cover;
+    position: relative;
+}
+
+#tab-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 1;
+}
+
+.tab-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    display: none;
+    animation: fadeInContent 1s ease-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

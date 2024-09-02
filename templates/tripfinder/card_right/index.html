@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VISA Service Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="visa-booking">
+        <h3>Đặt dịch vụ VISA</h3>
+        <div class="form-group">
+            <label for="visa-type">Chọn loại VISA:</label>
+            <select id="visa-type">
+                <option value="eVisa">eVisa</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="number-of-people">Chọn số người:</label>
+            <div class="quantity">
+                <button class="btn-minus"><i class="fas fa-minus"></i></button>
+                <input type="number" id="number-of-people" value="1" min="1">
+                <button class="btn-plus"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        <button class="submit-btn">Đặt Chỗ Trước</button>
+        <div class="cost-details">
+            <p>Giá dịch vụ: <span><i class="fas fa-user"></i> 1 × $50.00</span></p>
+            <p>Mã giảm giá: <span>Liên hệ</span></p>
+            <hr>
+            <p class="total">Tổng chi phí: <span>$50.00</span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

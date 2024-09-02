@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 350px;
+}
+
+.total-section {
+    padding: 20px;
+    border-bottom: 1px solid #ececec;
+    text-align: center;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.total-label {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+}
+
+.total-amount {
+    font-size: 24px;
+    color: #e50000;
+    margin: 5px 0;
+}
+
+.currency {
+    font-size: 16px;
+    color: #e50000;
+}
+
+.no-extra-fee {
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.payment-button {
+    background-color: #e50000;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.payment-button:hover {
+    background-color: #cc0000;
+}
+
+.view-services-button {
+    background-color: white;
+    color: #333;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.view-services-button:hover {
+    background-color: #f1f1f1;
+}
+
+.faq-section {
+    padding: 20px;
+}
+
+.faq-section h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.faq-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.faq-section ul li {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.faq-section ul li i {
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.see-more {
+    display: block;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: color 0.3s;
+}
+
+.see-more:hover {
+    color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

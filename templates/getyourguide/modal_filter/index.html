@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filters UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fb;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .filter-modal {
+            width: 420px;
+            height: 500px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 0.3s ease-in-out;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            background-color: #f6f8fb;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .filter-header h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .filter-header .close-btn {
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .filter-content {
+            padding: 16px;
+        }
+
+        .applied-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .applied-filters .filter-tag {
+            background-color: #e0e0e0;
+            border-radius: 50px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .filter-tag i {
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .filter-section {
+            margin-bottom: 16px;
+        }
+
+        .filter-section h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .filter-section h3 i {
+            transition: transform 0.3s ease;
+        }
+
+        .filter-section.collapsed h3 i {
+            transform: rotate(-90deg);
+        }
+
+        .filter-content-section {
+            display: none;
+            padding-top: 10px;
+        }
+
+        .filter-content-section.active {
+            display: block;
+        }
+
+        .price-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .price-inputs input {
+            width: 50%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .price-currency {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .duration-section label,
+        .categories-section label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .duration-section input[type="checkbox"],
+        .categories-section input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .filter-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .filter-footer .reset-btn,
+        .filter-footer .show-results-btn {
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .reset-btn {
+            background-color: transparent;
+            color: #007bff;
+        }
+
+        .reset-btn:hover {
+            background-color: #e7f0ff;
+        }
+
+        .show-results-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .show-results-btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="filter-modal">
+    <div class="filter-header">
+        <h2>Filters</h2>
+        <i class="fas fa-times close-btn"></i>
+    </div>
+    <div class="filter-content">
+        <div class="applied-filters">
+            <div class="filter-tag">
+                Santa Monica Pier <i class="fas fa-times"></i>
+            </div>
+            <div class="filter-tag">
+                In the evening, 5 PM-12 AM <i class="fas fa-times"></i>
+            </div>
+            <div class="filter-tag">
+                English <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Time <i class="fas fa-chevron-down"></i></h3>
+            <div class="filter-content-section">
+                <label>
+                    <input type="checkbox">
+                    Morning (5 AM - 12 PM)
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Afternoon (12 PM - 5 PM)
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Evening (5 PM - 12 AM)
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Night (12 AM - 5 AM)
+                </label>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Destination <i class="fas fa-chevron-down"></i></h3>
+            <div class="filter-content-section">
+                <label>
+                    <input type="checkbox">
+                    Santa Monica Pier
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Venice Beach
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Hollywood
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Downtown LA
+                </label>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Categories <i class="fas fa-chevron-down"></i></h3>
+            <div class="filter-content-section">
+                <label>
+                    <input type="checkbox">
+                    Sightseeing
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Food & Drink
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Adventure
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Relaxation
+                </label>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Price <i class="fas fa-chevron-down"></i></h3>
+            <div class="filter-content-section active">
+                <p>The median activity price is 4,037,600</p>
+                <div class="price-inputs">
+                    <input type="number" placeholder="Min. price" value="776000">
+                    <input type="number" placeholder="Max. price" value="36229900">
+                </div>
+                <div class="price-currency">
+                    Displayed in <span>Vietnamese Dong</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Duration <i class="fas fa-chevron-down"></i></h3>
+            <div class="filter-content-section">
+                <label>
+                    <input type="checkbox">
+                    0-3 hours
+                </label>
+                <label>
+                    <input type="checkbox">
+                    3-6 hours
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Full day
+                </label>
+                <label>
+                    <input type="checkbox">
+                    Multiple days
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="filter-footer">
+        <button class="reset-btn">Reset all</button>
+        <button class="show-results-btn">Show results</button>
+    </div>
+</div>
+
+<script>
+    // Toggle filter sections
+    document.querySelectorAll('.filter-section h3').forEach(function(header) {
+        header.addEventListener('click', function() {
+            const section = this.parentElement;
+            const content = section.querySelector('.filter-content-section');
+            section.classList.toggle('collapsed');
+            content.classList.toggle('active');
+        });
+    });
+
+    // Close the modal
+    document.querySelector('.close-btn').addEventListener('click', function() {
+        document.querySelector('.filter-modal').style.display = 'none';
+    });
+
+    // Remove applied filters
+    document.querySelectorAll('.filter-tag i').forEach(function(closeIcon) {
+        closeIcon.addEventListener('click', function() {
+            this.parentElement.remove();
+        });
+    });
+
+    // Reset all filters
+    document.querySelector('.reset-btn').addEventListener('click', function() {
+        document.querySelectorAll('.filter-tag').forEach(function(tag) {
+            tag.remove();
+        });
+
+        document.querySelectorAll('.filter-content-section input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.checked = false;
+        });
+
+        document.querySelector('.price-inputs input:first-child').value = '';
+        document.querySelector('.price-inputs input:last-child').value = '';
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('img-1.png'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    animation: fadeInBg 2s ease-in-out;
+}
+
+.booking-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    overflow: hidden;
+    width: 400px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 1s ease-in-out;
+}
+
+.tabs {
+    display: flex;
+    background-color: #F7B801;
+    border-bottom: 2px solid #E0A400;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    position: relative;
+}
+
+.tab.active {
+    background-color: #F0A500;
+    color: #fff;
+}
+
+.tab:hover {
+    background-color: #F0A500;
+    color: #fff;
+}
+
+.tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #D93D04;
+    animation: tabHighlight 0.5s ease;
+}
+
+.booking-form {
+    padding: 25px;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    transition: border-color 0.4s ease;
+}
+
+.form-group i {
+    margin-right: 12px;
+    color: #777;
+    font-size: 1.2em;
+    transition: color 0.4s ease;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 1em;
+    color: #333;
+    transition: color 0.4s ease;
+}
+
+.input-field:focus {
+    color: #000;
+}
+
+.form-group:hover i, .form-group:hover {
+    color: #F7B801;
+    border-color: #F7B801;
+}
+
+.search-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #D93D04;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.4s ease, transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(217, 61, 4, 0.3);
+}
+
+.search-btn:hover {
+    background-color: #B12A02;
+    transform: scale(1.05);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeInTab 0.5s ease;
+}
+
+@keyframes fadeInBg {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInTab {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes tabHighlight {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}

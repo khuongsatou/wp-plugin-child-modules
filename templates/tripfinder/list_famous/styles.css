@@ -1,0 +1,112 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f8e6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    color: #228b22;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.section-title i {
+    margin-right: 10px;
+}
+
+.card-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+}
+
+.card {
+    background-color: #f0f9f0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 300px;
+    flex-shrink: 0;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px 10px 0 0;
+}
+
+.badge {
+    background-color: #28a745;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.location {
+    color: #888;
+    font-size: 14px;
+}
+
+h4 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.rating {
+    font-size: 14px;
+    color: #888;
+    margin: 10px 0;
+}
+
+.rating .star {
+    color: #ff6347;
+}
+
+.price {
+    font-size: 20px;
+    color: #ff4500;
+    margin: 10px 0;
+}
+
+.btn {
+    background-color: #ff4500;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e63946;
+}

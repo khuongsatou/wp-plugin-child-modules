@@ -1,0 +1,144 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('background.jpg'); /* Add your background image */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.tabs-container {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.8s ease-out;
+    width: 850px; /* Adjust width as needed */
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    background: #f7f7f7;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    color: #333;
+}
+
+.tab:hover {
+    background: #f0f0f0;
+}
+
+.tab.active {
+    background: #0d6efd;
+    color: #fff;
+    border-bottom: 2px solid #0d6efd;
+}
+
+.tab-content {
+    padding: 15px 0;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.sub-tabs {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.sub-tab {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: bold;
+    margin: 0 5px;
+    border-radius: 4px;
+    color: #6a1b9a;
+}
+
+.sub-tab.active {
+    background: #6a1b9a;
+    color: #fff;
+}
+
+.sub-tab:hover {
+    background: #d1c4e9;
+}
+
+.search-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.search-option {
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.search-option label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.search-option input {
+    padding: 8px;
+    width: 90%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.search-option input:focus {
+    border-color: #0d6efd;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #8e24aa, #d81b60);
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    align-self: flex-end;
+}
+
+.search-button:hover {
+    background: linear-gradient(45deg, #d81b60, #8e24aa);
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

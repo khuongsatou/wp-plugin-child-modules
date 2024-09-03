@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Booking UI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="tabs-container">
+        <div class="tabs">
+            <button class="tab active" onclick="openMainTab(event, 'flightTab')">
+                <i class="fas fa-plane"></i> VÉ MÁY BAY
+            </button>
+            <button class="tab" onclick="openMainTab(event, 'tourTab')">
+                <i class="fas fa-map-marker-alt"></i> TOUR DU LỊCH
+            </button>
+        </div>
+        <div class="tab-content">
+            <div id="flightTab" class="tab-pane active">
+                <div class="sub-tabs">
+                    <button class="sub-tab active" onclick="openSubTab(event, 'planeSubTab')">
+                        <i class="fas fa-plane"></i> Máy bay
+                    </button>
+                    <button class="sub-tab" onclick="openSubTab(event, 'hotelSubTab')">
+                        <i class="fas fa-bed"></i> Khách sạn
+                    </button>
+                    <button class="sub-tab" onclick="openSubTab(event, 'insuranceSubTab')">
+                        <i class="fas fa-file-alt"></i> Bảo hiểm
+                    </button>
+                    <button class="sub-tab" onclick="openSubTab(event, 'ticketSubTab')">
+                        <i class="fas fa-ticket-alt"></i> Vé vui chơi
+                    </button>
+                </div>
+                <!-- Plane Sub Tab -->
+                <div id="planeSubTab" class="sub-tab-pane active">
+                    <div class="search-options">
+                        <div class="search-option">
+                            <label><i class="fas fa-plane-departure"></i> Từ</label>
+                            <input type="text" placeholder="Nhập địa điểm">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-plane-arrival"></i> Đến</label>
+                            <input type="text" placeholder="Nhập địa điểm">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-calendar-alt"></i> Ngày đi</label>
+                            <input type="date" value="2024-09-06">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-user"></i> Số lượng khách</label>
+                            <input type="text" value="1 người lớn">
+                        </div>
+                        <button class="search-button">Tìm kiếm</button>
+                    </div>
+                </div>
+                <!-- Hotel Sub Tab -->
+                <div id="hotelSubTab" class="sub-tab-pane">
+                    <div class="search-options">
+                        <div class="search-option">
+                            <label><i class="fas fa-map-marker-alt"></i> Địa điểm</label>
+                            <input type="text" placeholder="Nhập địa điểm">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-calendar-alt"></i> Ngày nhận phòng</label>
+                            <input type="date">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-calendar-alt"></i> Ngày trả phòng</label>
+                            <input type="date">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-user"></i> Số lượng khách</label>
+                            <input type="text" value="2 người lớn, 1 trẻ em">
+                        </div>
+                        <button class="search-button">Tìm kiếm</button>
+                    </div>
+                </div>
+                <!-- Insurance Sub Tab -->
+                <div id="insuranceSubTab" class="sub-tab-pane">
+                    <div class="search-options">
+                        <div class="search-option">
+                            <label><i class="fas fa-file-alt"></i> Loại bảo hiểm</label>
+                            <select>
+                                <option value="du-lich">Du lịch</option>
+                                <option value="suc-khoe">Sức khỏe</option>
+                                <option value="oto">Ô tô</option>
+                            </select>
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-calendar-alt"></i> Ngày bắt đầu</label>
+                            <input type="date">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-calendar-alt"></i> Ngày kết thúc</label>
+                            <input type="date">
+                        </div>
+                        <button class="search-button">Tìm kiếm</button>
+                    </div>
+                </div>
+                <!-- Ticket Sub Tab -->
+                <div id="ticketSubTab" class="sub-tab-pane">
+                    <div class="search-options">
+                        <div class="search-option">
+                            <label><i class="fas fa-map-marker-alt"></i> Địa điểm</label>
+                            <input type="text" placeholder="Nhập địa điểm vui chơi">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-calendar-alt"></i> Ngày sử dụng</label>
+                            <input type="date">
+                        </div>
+                        <div class="search-option">
+                            <label><i class="fas fa-user"></i> Số lượng vé</label>
+                            <input type="text" value="2 vé người lớn">
+                        </div>
+                        <button class="search-button">Tìm kiếm</button>
+                    </div>
+                </div>
+            </div>
+            <div id="tourTab" class="tab-pane">
+                <!-- Content for "TOUR DU LỊCH" tab -->
+                <p>Nội dung tìm kiếm tour du lịch ở đây.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

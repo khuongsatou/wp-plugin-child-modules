@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date and Visitor Selection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="date-and-people">
+            <h2>Chọn ngày & Số người</h2>
+            <div class="date-picker">
+                <label for="start-date">Ngày khởi hành:</label>
+                <input type="text" id="start-date" placeholder="DD/MM/YYYY">
+                <i class="fa fa-calendar-alt"></i>
+                <small>Vui lòng chọn ngày tham quan</small>
+            </div>
+            <div class="people-counter">
+                <div class="person-type">
+                    <label>Người lớn</label>
+                    <div class="counter">
+                        <button class="minus"><i class="fa fa-minus"></i></button>
+                        <span class="count">0</span>
+                        <button class="plus"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="person-type">
+                    <label>Trẻ em (100 - 130cm)</label>
+                    <div class="counter">
+                        <button class="minus"><i class="fa fa-minus"></i></button>
+                        <span class="count">0</span>
+                        <button class="plus"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="person-type">
+                    <label>Em bé (dưới 2 tuổi)</label>
+                    <div class="counter">
+                        <button class="minus"><i class="fa fa-minus"></i></button>
+                        <span class="count">0</span>
+                        <button class="plus"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

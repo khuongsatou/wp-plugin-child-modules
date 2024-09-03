@@ -1,0 +1,86 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.flash-deals {
+    display: flex;
+    gap: 20px;
+}
+
+.deal-card {
+    width: 300px;
+    height: 200px;
+    border-radius: 20px;
+    padding: 20px;
+    color: #000;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.deal-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.deal-card.yellow {
+    background-color: #FFD95A;
+}
+
+.deal-card.blue {
+    background-color: #8BD3E6;
+}
+
+.deal-card.pink {
+    background-color: #F6BDC0;
+}
+
+.content {
+    z-index: 1;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.btn {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e6e6e6;
+}
+
+.icon {
+    font-size: 4rem;
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+}
+
+.deal-card:hover .icon {
+    transform: scale(1.1);
+}

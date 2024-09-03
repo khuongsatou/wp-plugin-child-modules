@@ -1,0 +1,126 @@
+/* Resetting default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Container Styling */
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    gap: 40px;
+}
+
+/* Left Section Styling */
+.left-section {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.subheading {
+    font-family: 'Cursive', sans-serif;
+    color: #d35400;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.main-heading {
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.btn-red {
+    background-color: #c0392b;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-red:hover {
+    background-color: #e74c3c;
+}
+
+/* Right Section Styling */
+.right-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+    flex: 1.5;
+}
+
+.card, .image-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover, .image-card:hover {
+    transform: translateY(-10px);
+}
+
+.card i {
+    font-size: 40px;
+    color: #d35400;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.card p {
+    font-size: 14px;
+    color: #777;
+    line-height: 1.5;
+}
+
+.image-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.btn-yellow {
+    background-color: #f39c12;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-yellow:hover {
+    background-color: #e67e22;
+}

@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 10px 20px; */
+    padding-top:30px;
+    padding-bottom:40px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    padding-left:10px;
+}
+
+.logo img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.company-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e94b35;
+}
+
+.company-name .tourist {
+    font-size: 14px;
+    color: #f9a825;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+   
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    position: relative;
+}
+
+nav ul li a:hover {
+    color: #e94b35;
+    transition: color 0.3s ease;
+}
+
+nav ul li a i {
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    padding-right:10px;
+}
+
+.icons a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    margin-left: 20px;
+    position: relative;
+}
+
+.icons a .fa-shopping-cart {
+    font-size: 20px;
+    color: #f9a825;
+}
+
+.icons a .fa-user {
+    margin-right: 5px;
+}
+
+.menu-icon {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+    }
+
+    .menu-icon {
+        display: block;
+        font-size: 24px;
+    }
+}
+
+/* Animations */
+nav ul li a::after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: #e94b35;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}

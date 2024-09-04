@@ -11,8 +11,9 @@ require_once plugin_dir_path(__FILE__) . 'modules/yatch/functions-yatch.php';
 
 // Initialize the Yatch Module
 if (class_exists('Yatch')) {
+    // Khởi tạo module
     $yatch_module = new Yatch();
 
-    // Khởi tạo class
+    // Khởi tạo module
     $yatch_detail_module = new Yatch_Detail_Shortcode();
 }

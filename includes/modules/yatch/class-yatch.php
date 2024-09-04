@@ -44,9 +44,6 @@ class Yatch
     {
         add_action('wp_ajax_yatch_search', array($this, 'handle_ajax_search'));
         add_action('wp_ajax_nopriv_yatch_search', array($this, 'handle_ajax_search'));
-
-        // add_action('wp_ajax_sort_yatch_posts',  array($this, 'handle_sort_yatch_posts'));
-        // add_action('wp_ajax_nopriv_sort_yatch_posts', array($this, 'handle_sort_yatch_posts'));
     }
 
     public function sortable_columns($columns)
@@ -169,12 +166,6 @@ class Yatch
         wp_localize_script('yatch-script', 'yatchAjax', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
-
-        // wp_localize_script('jquery', 'ajaxurl', array(
-        //     'ajax_url' => admin_url('admin-ajax.php')
-        // ));
-
-
     }
 
     // Thêm meta box cho hạng sao, đánh giá, và giá
@@ -464,8 +455,8 @@ class Yatch
     private function render_view_toggle($current_view)
     {
         echo '<div class="yatch-view-toggle">';
-        echo '<button class="yatch-toggle" data-view="list"' . ($current_view === 'list' ? ' disabled' : '') . '>' . __('List View') . '</button>';
-        echo '<button class="yatch-toggle" data-view="grid"' . ($current_view === 'grid' ? ' disabled' : '') . '>' . __('Grid View') . '</button>';
+        echo '<button class="yatch-toggle" data-view="list"' . ($current_view === 'list' ? ' ' : '') . '>' . __('List View') . '</button>';
+        echo '<button class="yatch-toggle" data-view="grid"' . ($current_view === 'grid' ? ' ' : '') . '>' . __('Grid View') . '</button>';
         echo '</div>';
     }
 
@@ -559,7 +550,7 @@ class Yatch
 
         $search_query = isset($_GET['search_query']) ? sanitize_text_field($_GET['search_query']) : '';
         $meta_query = array('relation' => 'OR');
-        $flag = false;
+
         if (!empty($search_query)) {
             $meta_query[] = array(
                 'key'     => '_yatch_star_rating',
@@ -567,13 +558,7 @@ class Yatch
                 'compare' => 'LIKE',
                 'type'    => 'NUMERIC'
             );
-            $flag = true;
         }
-
-        // echo '<pre>';
-        // print_r($meta_query);
-        // echo '</pre>';
-
 
         if (!empty($search_query)) {
             $meta_query[] = array(
@@ -582,7 +567,6 @@ class Yatch
                 'compare' => 'LIKE',
                 'type'    => 'NUMERIC'
             );
-            $flag = true;
         }
 
         if (!empty($search_query)) {
@@ -592,7 +576,6 @@ class Yatch
                 'compare' => 'LIKE',
                 'type'    => 'NUMERIC'
             );
-            $flag = true;
         }
 
         
@@ -604,6 +587,12 @@ class Yatch
             $meta_key = '_yatch_review_count';
         } elseif ($atts['orderby'] === 'price') {
             $meta_key = '_yatch_price';
+        } elseif ($atts['orderby'] === 'cabin_count') {
+            $meta_key = '_yatch_cabin_count';
+        } elseif ($atts['orderby'] === 'adult_count') {
+            $meta_key = '_yatch_adult_count';
+        } elseif ($atts['orderby'] === 'children_count') {
+            $meta_key = '_yatch_children_count';
         }
 
         // Tạo một hàm tùy chỉnh để thay đổi điều kiện WHERE của truy vấn
@@ -641,7 +630,7 @@ class Yatch
         
 
         $query = new WP_Query($query_args);
-        echo '<pre>'; print_r($query_args ); echo '</pre>';
+        // echo '<pre>'; print_r($query_args ); echo '</pre>';
 
         // Loại bỏ filter sau khi sử dụng để không ảnh hưởng đến các truy vấn khác
         remove_filter('posts_where', $custom_posts_where);
@@ -649,63 +638,24 @@ class Yatch
 
         ob_start();
 
-        if ($query->have_posts()) {
-            echo '<div class="yatch-posts yatch-' . esc_attr($atts['view']) . '-view">';
-            while ($query->have_posts()) {
-                $query->the_post();
 
-                $star_rating = get_post_meta(get_the_ID(), '_yatch_star_rating', true);
-                $review_count = get_post_meta(get_the_ID(), '_yatch_review_count', true);
-                $price = get_post_meta(get_the_ID(), '_yatch_price', true);
+        // Thêm form tìm kiếm
+        // $this->render_search_form($search_query);
 
-        ?>
+        // Thêm nút chuyển đổi chế độ hiển thị
+        // $this->render_view_toggle($atts['view']);
 
+        // Thêm các nút sắp xếp
+        // $this->render_sort_buttons($atts['order'], $search_query);
 
-
-    <?php
-
-
-                echo '<div class="yatch-post-item">';
-                echo '<a href="' . get_permalink() . '">';
-                if (has_post_thumbnail()) {
-                    echo get_the_post_thumbnail(get_the_ID(), 'medium');
-                }
-                echo '<h2>' . get_the_title() . '</h2>';
-                echo '</a>';
-                echo '<p>' . __('Star Rating: ') . esc_html($star_rating) . '</p>';
-                echo '<p>' . __('Review Count: ') . esc_html($review_count) . '</p>';
-                echo '<p>' . __('Price: $') . esc_html($price) . '</p>';
-                echo '</div>';
-            }
-            echo '</div>';
-        } else {
-            echo '<p>' . __('No posts found.') . '</p>';
-        }
+        // Hiển thị danh sách các bài viết
+        $this->render_posts($query, $atts['view']);
 
         wp_reset_postdata();
         echo ob_get_clean();
         wp_die();
     }
 
-
-    public function run()
-    {
-        // Các thao tác cần thiết khi plugin khởi chạy
-    }
-
-    public static function activate()
-    {
-        // Logic kích hoạt như tạo bảng database, thêm tùy chọn
-    }
-
-    public static function deactivate()
-    {
-        // Logic vô hiệu hóa như xóa bảng database, xóa tùy chọn
-    }
 }
 
-// Kích hoạt plugin
-register_activation_hook(__FILE__, array('Yatch', 'activate'));
 
-// Vô hiệu hóa plugin
-register_deactivation_hook(__FILE__, array('Yatch', 'deactivate'));

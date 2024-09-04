@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 jQuery(document).ready(function($) {
     $('.yatch-toggle').on('click', function() {
         var view = $(this).data('view');
+        console.log(view);
         $('.yatch-posts').removeClass('yatch-list-view yatch-grid-view').addClass('yatch-' + view + '-view');
     });
 });
@@ -27,10 +28,6 @@ jQuery(document).ready(function($) {
     function handleSearch() {
         var $form = $('#yatch-search-form');
         var formData = $form.serialize();
-        // var sortOrder = $('#sort-order').val(); // Lấy giá trị sắp xếp (nếu có)
-        // var sortBy = $('#sort-by').val(); // Lấy tiêu chí sắp xếp (nếu có)
-
-
         console.log(formData);
         $.ajax({
             url: yatchAjax.ajax_url,
@@ -62,32 +59,7 @@ jQuery(document).ready(function($) {
         // Gọi lại hàm tìm kiếm và sắp xếp
         handleSearch();
     });
+
+    handleSearch();
 });
 
-
-
-// jQuery(document).ready(function($) {
-//     $('.sort-button').on('click', function(e) {
-//         e.preventDefault();
-
-//         var orderby = $(this).data('orderby');
-//         var order = $(this).data('order');
-//         var search_query = $(this).data('search-query');
-
-//         $.ajax({
-//             url: yatchAjax.ajax_url, // URL mặc định của WordPress để xử lý AJAX
-//             type: 'GET',
-//             data: {
-//                 // action: 'sort_yatch_posts', // Tên action để nhận diện trong PHP
-//                 action: 'yatch_search', // Tên action để nhận diện trong PHP
-//                 orderby: orderby,
-//                 order: order,
-//                 search_query: search_query,
-//             },
-//             success: function(response) {
-//                 // Cập nhật danh sách bài viết với nội dung trả về
-//                 $('.yatch-posts').html(response);
-//             }
-//         });
-//     });
-// });

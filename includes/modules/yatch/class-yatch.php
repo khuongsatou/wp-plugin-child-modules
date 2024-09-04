@@ -24,7 +24,12 @@ class Yatch
 
         // Thêm meta box
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
+        add_action('add_meta_boxes',  array($this, 'add_yatch_sku_meta_box'));
+
+        
+
         add_action('save_post', array($this, 'save_meta_boxes'));
+        add_action('save_post', array($this, 'save_yatch_sku_meta_box'));
 
         // Thêm cột tùy chỉnh vào danh sách quản lý
         add_filter('manage_yatch_post_posts_columns', array($this, 'set_custom_columns'));
@@ -39,6 +44,9 @@ class Yatch
     {
         add_action('wp_ajax_yatch_search', array($this, 'handle_ajax_search'));
         add_action('wp_ajax_nopriv_yatch_search', array($this, 'handle_ajax_search'));
+
+        // add_action('wp_ajax_sort_yatch_posts',  array($this, 'handle_sort_yatch_posts'));
+        // add_action('wp_ajax_nopriv_sort_yatch_posts', array($this, 'handle_sort_yatch_posts'));
     }
 
     public function sortable_columns($columns)
@@ -49,7 +57,40 @@ class Yatch
         $columns['cabin_count'] = 'cabin_count';
         $columns['adult_count'] = 'adult_count';
         $columns['children_count'] = 'children_count';
+        $columns['yatch_sku'] = 'yatch_sku';
         return $columns;
+    }
+
+    function handle_sort_yatch_posts() {
+        // Nhận các tham số từ AJAX request
+        $orderby = isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : 'date';
+        $order = isset($_GET['order']) ? sanitize_text_field($_GET['order']) : 'DESC';
+        $search_query = isset($_GET['search_query']) ? sanitize_text_field($_GET['search_query']) : '';
+        
+        echo $orderby;
+        // Query các bài post theo tiêu chí sắp xếp
+        $args = array(
+            'post_type' => 'yatch_post',
+            'orderby' => $orderby,
+            'order' => $order,
+            's' => $search_query,
+        );
+        $query = new WP_Query($args);
+    
+        // Bắt đầu vòng lặp
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                // Hiển thị post theo cách của bạn, ví dụ:
+                echo '<div>' . get_the_title() . '</div>';
+            }
+        } else {
+            echo 'No posts found.';
+        }
+    
+        // Kết thúc và xóa query
+        wp_reset_postdata();
+        wp_die(); // Kết thúc AJAX request
     }
 
 
@@ -128,6 +169,12 @@ class Yatch
         wp_localize_script('yatch-script', 'yatchAjax', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
+
+        // wp_localize_script('jquery', 'ajaxurl', array(
+        //     'ajax_url' => admin_url('admin-ajax.php')
+        // ));
+
+
     }
 
     // Thêm meta box cho hạng sao, đánh giá, và giá
@@ -142,6 +189,44 @@ class Yatch
             'default'
         );
     }
+
+
+
+    // Lưu giá trị SKU khi lưu bài viết
+    function save_yatch_sku_meta_box($post_id) {
+        // Kiểm tra nếu không phải là autosave và người dùng có quyền chỉnh sửa
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        if (isset($_POST['yatch_sku'])) {
+            $yatch_sku = sanitize_text_field($_POST['yatch_sku']);
+            update_post_meta($post_id, '_yatch_sku', $yatch_sku);
+        }
+    }
+
+    // Thêm meta box để nhập SKU
+    function add_yatch_sku_meta_box() {
+        add_meta_box(
+            'yatch_sku_meta_box',      // ID của meta box
+            __('Yatch SKU', 'text-domain'), // Tiêu đề meta box
+            array($this, 'render_yatch_sku_meta_box'), // Callback để hiển thị form
+            'yatch_post',              // Post type
+            'side',                    // Vị trí hiển thị (side, normal)
+            'high'                     // Độ ưu tiên hiển thị
+        );
+    }
+
+    // Callback để hiển thị form nhập SKU
+    function render_yatch_sku_meta_box($post) {
+        // Lấy giá trị SKU hiện tại từ post meta
+        $yatch_sku = get_post_meta($post->ID, '_yatch_sku', true);
+        ?>
+        <label for="yatch_sku"><?php _e('Yatch SKU:', 'text-domain'); ?></label>
+        <input type="text" name="yatch_sku" id="yatch_sku" value="<?php echo esc_attr($yatch_sku); ?>" />
+        <?php
+    }
+    
 
     public function render_meta_box($post)
     {
@@ -208,6 +293,8 @@ class Yatch
         $columns['cabin_count'] = __('Cabin Count');
         $columns['adult_count'] = __('Adult Count');
         $columns['children_count'] = __('Children Count');
+        // Chèn cột SKU sau cột tiêu đề
+        $columns['yatch_sku'] =__('SKU', 'text-domain');
         return $columns;
     }
 
@@ -238,6 +325,10 @@ class Yatch
             case 'children_count':
                 $children_count = get_post_meta($post_id, '_yatch_children_count', true);
                 echo esc_html($children_count);
+                break;
+            case 'yatch_sku':
+                $yatch_sku = get_post_meta($post_id, '_yatch_sku', true);
+                echo esc_html($yatch_sku);
                 break;
         }
     }
@@ -361,6 +452,11 @@ class Yatch
         echo '<div class="yatch-search-form">';
         echo '<form id="yatch-search-form" method="get">';
         echo '<input type="text" name="search_query" placeholder="' . esc_attr__('Search...', 'text-domain') . '" value="' . esc_attr($search_query) . '" />';
+?>
+        <input type="hidden" id="sort-order" name="order" value="ASC">
+        <input type="hidden" id="sort-by" name="orderby" value="date">
+
+<?php
         echo '</form>';
         echo '</div>';
     }
@@ -372,6 +468,7 @@ class Yatch
         echo '<button class="yatch-toggle" data-view="grid"' . ($current_view === 'grid' ? ' disabled' : '') . '>' . __('Grid View') . '</button>';
         echo '</div>';
     }
+
 
     private function render_sort_buttons($current_order, $search_query)
     {
@@ -385,16 +482,12 @@ class Yatch
             'children_count' => __('Children Count'),
         );
 
+        echo '<div class="yatch-view-sort">';
         foreach ($sort_fields as $field => $label) {
             $order = ($current_order === 'ASC') ? 'DESC' : 'ASC';
-            $link = add_query_arg(array(
-                'orderby' => $field,
-                'order'   => $order,
-                'search_query' => $search_query,
-            ));
-
-            echo '<a href="' . esc_url($link) . '" class="sort-button">' . esc_html($label) . '</a><br/>';
+            echo '<button class="sort-button" data-orderby="' . esc_attr($field) . '" data-order="' . esc_attr($order) . '" data-search-query="' . esc_attr($search_query) . '">' . esc_html($label) . '</button> | ';
         }
+        echo '</div>';
     }
 
 
@@ -466,6 +559,7 @@ class Yatch
 
         $search_query = isset($_GET['search_query']) ? sanitize_text_field($_GET['search_query']) : '';
         $meta_query = array('relation' => 'OR');
+        $flag = false;
         if (!empty($search_query)) {
             $meta_query[] = array(
                 'key'     => '_yatch_star_rating',
@@ -473,11 +567,12 @@ class Yatch
                 'compare' => 'LIKE',
                 'type'    => 'NUMERIC'
             );
+            $flag = true;
         }
 
-        echo '<pre>';
-        print_r($meta_query);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($meta_query);
+        // echo '</pre>';
 
 
         if (!empty($search_query)) {
@@ -487,6 +582,7 @@ class Yatch
                 'compare' => 'LIKE',
                 'type'    => 'NUMERIC'
             );
+            $flag = true;
         }
 
         if (!empty($search_query)) {
@@ -496,7 +592,10 @@ class Yatch
                 'compare' => 'LIKE',
                 'type'    => 'NUMERIC'
             );
+            $flag = true;
         }
+
+        
 
         $meta_key = '';
         if ($atts['orderby'] === 'star_rating') {
@@ -508,15 +607,28 @@ class Yatch
         }
 
         // Tạo một hàm tùy chỉnh để thay đổi điều kiện WHERE của truy vấn
-        add_filter('posts_where', function ($where) use ($search_query) {
-            if (!empty($search_query)) {
-                global $wpdb;
+        $custom_posts_where = function ($where) use ($search_query) {
+            global $wpdb;
+        
+            // Nếu search_query không có giá trị, thêm điều kiện mặc định vào WHERE
+            if (empty($search_query)) {
+                // Điều kiện mặc định để lấy tất cả bài viết của post_type 'yatch_post'
+                $where .= $wpdb->prepare(" AND {$wpdb->posts}.post_type = %s", 'yatch_post');
+            } else {
+                // Nếu có search_query, tìm kiếm trong tiêu đề bài viết
                 $where .= $wpdb->prepare(" OR {$wpdb->posts}.post_title LIKE %s", '%' . $wpdb->esc_like($search_query) . '%');
+                $where .= $wpdb->prepare(" AND {$wpdb->posts}.post_type = %s", 'yatch_post');
             }
-            // Thêm điều kiện post_type vào WHERE
-            $where .= $wpdb->prepare(" AND {$wpdb->posts}.post_type = %s", 'yatch_post');
+        
             return $where;
-        });
+        };
+
+        add_filter('posts_where', $custom_posts_where);
+        
+        // echo '<pre>';
+        // print_r($meta_query);
+        // echo '</pre>';
+
 
         $query_args = array(
             'post_type'      => 'yatch_post',
@@ -524,23 +636,15 @@ class Yatch
             'meta_key'       => $meta_key,
             'orderby'        => $meta_key ? 'meta_value_num' : $atts['orderby'],
             'order'          => $atts['order'],
-            // 's'              => $search_query,
-            'meta_query'     => $meta_query
+            'meta_query'     => $meta_query,
         );
+        
 
         $query = new WP_Query($query_args);
-        // echo '<pre>'; print_r($query ); echo '</pre>';
+        echo '<pre>'; print_r($query_args ); echo '</pre>';
 
         // Loại bỏ filter sau khi sử dụng để không ảnh hưởng đến các truy vấn khác
-        remove_filter('posts_where', function ($where) use ($search_query) {
-            if (!empty($search_query)) {
-                global $wpdb;
-                $where .= $wpdb->prepare(" OR {$wpdb->posts}.post_title LIKE %s", '%' . $wpdb->esc_like($search_query) . '%');
-            }
-            // Thêm điều kiện post_type vào WHERE
-            $where .= $wpdb->prepare(" AND {$wpdb->posts}.post_type = %s", 'yatch_post');
-            return $where;
-        });
+        remove_filter('posts_where', $custom_posts_where);
 
 
         ob_start();
@@ -558,7 +662,7 @@ class Yatch
 
 
 
-<?php
+    <?php
 
 
                 echo '<div class="yatch-post-item">';

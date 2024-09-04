@@ -27,7 +27,11 @@ jQuery(document).ready(function($) {
     function handleSearch() {
         var $form = $('#yatch-search-form');
         var formData = $form.serialize();
-        
+        // var sortOrder = $('#sort-order').val(); // Lấy giá trị sắp xếp (nếu có)
+        // var sortBy = $('#sort-by').val(); // Lấy tiêu chí sắp xếp (nếu có)
+
+
+        console.log(formData);
         $.ajax({
             url: yatchAjax.ajax_url,
             type: 'GET',
@@ -43,5 +47,47 @@ jQuery(document).ready(function($) {
 
     // Sử dụng debounce cho ô tìm kiếm
     $('#yatch-search-form input').on('input', debounce(handleSearch, 300));
+
+    // Xử lý sự kiện khi người dùng nhấn vào nút sắp xếp
+    $('.sort-button').on('click', function(e) {
+        e.preventDefault();
+
+        var sortOrder = $(this).data('order');
+        var sortBy = $(this).data('orderby');
+
+        // Cập nhật giá trị sắp xếp vào các trường ẩn (nếu có)
+        $('#sort-order').val(sortOrder);
+        $('#sort-by').val(sortBy);
+
+        // Gọi lại hàm tìm kiếm và sắp xếp
+        handleSearch();
+    });
 });
 
+
+
+// jQuery(document).ready(function($) {
+//     $('.sort-button').on('click', function(e) {
+//         e.preventDefault();
+
+//         var orderby = $(this).data('orderby');
+//         var order = $(this).data('order');
+//         var search_query = $(this).data('search-query');
+
+//         $.ajax({
+//             url: yatchAjax.ajax_url, // URL mặc định của WordPress để xử lý AJAX
+//             type: 'GET',
+//             data: {
+//                 // action: 'sort_yatch_posts', // Tên action để nhận diện trong PHP
+//                 action: 'yatch_search', // Tên action để nhận diện trong PHP
+//                 orderby: orderby,
+//                 order: order,
+//                 search_query: search_query,
+//             },
+//             success: function(response) {
+//                 // Cập nhật danh sách bài viết với nội dung trả về
+//                 $('.yatch-posts').html(response);
+//             }
+//         });
+//     });
+// });

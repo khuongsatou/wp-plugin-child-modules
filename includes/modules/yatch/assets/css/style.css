@@ -115,6 +115,31 @@
     background-color: #005177;
 }
 
+
+/* Nút chuyển đổi chế độ sort */
+.yatch-view-sort {
+    margin-bottom: 20px;
+}
+
+.yatch-view-sort button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0073aa;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top:5px;
+}
+
+.yatch-view-sort button.active {
+    background-color: #005177;
+}
+
+.yatch-view-sort button:hover {
+    background-color: #005177;
+}
+
 /* Nút sắp xếp */
 .yatch-sort-buttons {
     margin-bottom: 20px;

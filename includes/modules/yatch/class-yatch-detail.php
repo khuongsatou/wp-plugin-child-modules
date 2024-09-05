@@ -39,6 +39,7 @@ class Yatch_Detail_Shortcode {
         echo '<p>Review Count: ' . esc_html(get_post_meta(get_the_ID(), '_yatch_review_count', true)) . '</p>';
         echo '<p>Price: $' . esc_html($price) . '</p>';
         echo '<p>Thêm vào cart: ' . '<a href="' . esc_url(add_query_arg(array(
+            // 'yatch_sku' => get_post_field('_yatch_sku', true),
             'yatch_slug' => get_post_field('post_name', get_the_ID()),
             'action' => 'add_to_cart'
         ), get_permalink())) . '">' . __('Add to Cart', 'text-domain') . '</a>' . '</p>';
@@ -64,11 +65,13 @@ class Yatch_Detail_Shortcode {
             if ($yatch_post) {
                 $post = $yatch_post[0];
                 $price = get_post_meta($post->ID, '_yatch_price', true);
+                $yatch_sku = get_post_meta($post->ID, '_yatch_sku', true);
 
                 // Thêm sản phẩm vào giỏ hàng WooCommerce
                 $product_data = array(
                     'name' => get_the_title($post),
                     'price' => $price,
+                    'yatch_sku' => $yatch_sku,
                     'quantity' => 1,
                 );
 
@@ -81,7 +84,8 @@ class Yatch_Detail_Shortcode {
                 );
 
                 // Sử dụng hook để thêm sản phẩm vào giỏ hàng với giá tùy chỉnh
-                $product_id = wc_get_product_id_by_sku('yatch-booking'); // Bạn có thể tạo một sản phẩm chung với SKU này để đại diện cho tất cả du thuyền
+                $product_id = wc_get_product_id_by_sku($yatch_sku); // Bạn có thể tạo một sản phẩm chung với SKU này để đại diện cho tất cả du thuyền inventory "yatch_booking"
+                # Sau đó sẽ lấy ID product_id ra
                 echo $product_id;
                 echo '<pre>';
                 print_r($cart_item_data);

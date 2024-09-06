@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #b8dffb, #ffe2c7);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo .flame {
+    color: #e74c3c;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.logo .company-name {
+    font-size: 24px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.logo .phoenix {
+    color: #6c757d;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 30px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    position: relative;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #f39c12;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.icons a {
+    text-decoration: none;
+    color: black;
+    margin-left: 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.icons a:hover {
+    color: #f39c12;
+}
+
+.icons a i {
+    margin-right: 5px;
+}
+
+/* Animation for hover effect */
+nav ul li a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #f39c12;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover::before {
+    visibility: visible;
+    transform: scaleX(1);
+}

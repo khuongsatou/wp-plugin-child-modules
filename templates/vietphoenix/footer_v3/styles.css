@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+}
+
+footer {
+    background-color: #dcdcdc;
+    padding: 40px 20px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+}
+
+.logo i {
+    font-size: 40px;
+    margin-right: 10px;
+    color: #f15a24;
+}
+
+.brand-name {
+    color: #f15a24;
+    font-weight: 700;
+}
+
+.brand-subname {
+    color: #666;
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.tourist {
+    color: #666;
+    font-size: 14px;
+    margin-left: 10px;
+    font-weight: 400;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.section {
+    margin-right: 40px;
+}
+
+.section h4 {
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: #333;
+}
+
+.section ul {
+    list-style: none;
+}
+
+.section ul li {
+    margin-bottom: 10px;
+    color: #666;
+    cursor: pointer;
+}
+
+.section ul li:hover {
+    color: #f15a24;
+    transition: color 0.3s ease-in-out;
+}
+
+.payment-methods {
+    margin-top: 20px;
+}
+
+.payment-methods i {
+    font-size: 24px;
+    margin-right: 15px;
+    color: #666;
+}
+
+select {
+    margin-bottom: 15px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+}
+
+.footer-bottom {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+footer {
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

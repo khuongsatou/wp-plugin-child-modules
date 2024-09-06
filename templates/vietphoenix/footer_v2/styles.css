@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+footer {
+    background-color: #e0e0e0;
+    padding: 40px 20px;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: #f15a24;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.logo i {
+    font-size: 32px;
+    margin-right: 8px;
+}
+
+.brand-name {
+    color: #f15a24;
+    font-weight: bold;
+}
+
+.brand-subname {
+    color: #666;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.tourist {
+    color: #666;
+    font-weight: 400;
+    margin-left: 8px;
+}
+
+.bo-cong-thuong img {
+    margin-top: 10px;
+    width: 100px;
+}
+
+.links-section {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.section {
+    margin-right: 40px;
+}
+
+.section h4 {
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: #000;
+}
+
+.section ul {
+    list-style: none;
+}
+
+.section ul li {
+    margin-bottom: 10px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.section ul li:hover {
+    color: #f15a24;
+}
+
+.dropdown-group {
+    margin-bottom: 15px;
+}
+
+.dropdown {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown span {
+    color: #333;
+}
+
+.payment-methods img {
+    margin-right: 15px;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}

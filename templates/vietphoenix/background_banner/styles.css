@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    position: relative;
+    width: 350px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    width: 100%;
+    display: block;
+}
+
+.text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+}
+
+.text h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.btn {
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #e6b800;
+}
+
+.travel-agency {
+    background-color: #3b5998;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.travel-text h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.icons i {
+    margin-left: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.icons i:hover {
+    color: #ffcc00;
+}

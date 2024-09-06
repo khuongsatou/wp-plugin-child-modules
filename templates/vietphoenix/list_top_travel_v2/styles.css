@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #6c6c6c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    align-items: center;
+}
+
+.left-section {
+    flex: 1;
+    padding-right: 30px;
+}
+
+.left-section h2 {
+    font-size: 24px;
+    color: #6c6c6c;
+    text-align: left;
+}
+
+.right-section {
+    flex: 2;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.destination-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.destination-card {
+    position: relative;
+    width: 250px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.destination-card:hover {
+    transform: scale(1.05);
+}
+
+.destination-card:hover img {
+    transform: scale(1.2);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    color: #fff;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.overlay h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.destination-card:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+}

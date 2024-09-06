@@ -1,0 +1,145 @@
+/* General reset and body styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #b8dffb, #ffe2c7);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Header layout */
+header {
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo .flame {
+    color: #e74c3c;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.logo .company-name {
+    font-size: 24px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.logo .phoenix {
+    color: #6c757d;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Navigation */
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    position: relative;
+    margin-left: 30px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    position: relative;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #f39c12;
+}
+
+/* Dropdown Menu */
+.dropdown-content,
+.dropdown-sub-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+}
+
+.dropdown-content li,
+.dropdown-sub-content li {
+    position: relative;
+}
+
+.dropdown-content li a,
+.dropdown-sub-content li a {
+    color: black;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content li a:hover,
+.dropdown-sub-content li a:hover {
+    background-color: #f39c12;
+    color: white;
+}
+
+/* Display dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-sub:hover .dropdown-sub-content {
+    display: block;
+    left: 100%;
+    top: 0;
+}
+
+/* Arrow icons */
+.dropdown a i,
+.dropdown-sub a i {
+    margin-left: 5px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.icons a {
+    text-decoration: none;
+    color: black;
+    margin-left: 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.icons a:hover {
+    color: #f39c12;
+}
+
+.icons a i {
+    margin-right: 5px;
+}

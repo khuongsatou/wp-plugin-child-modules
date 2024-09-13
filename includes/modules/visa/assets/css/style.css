@@ -1,0 +1,165 @@
+/* Tổng quan */
+.visa-posts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.visa-post-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.visa-post-item:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.visa-post-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.visa-post-item h2 {
+    font-size: 1.5em;
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.visa-post-item p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Chế độ xem danh sách */
+.visa-list-view .visa-post-item {
+    width: 100%;
+}
+
+.visa-list-view .visa-post-item img {
+    width: 100px;
+    height: 75px;
+    object-fit: cover;
+    margin-right: 15px;
+    float: left;
+}
+
+/* Chế độ xem lưới */
+.visa-grid-view .visa-post-item {
+    width: calc(33.333% - 20px);
+}
+
+.visa-grid-view .visa-post-item img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+/* Form tìm kiếm */
+.visa-search-form {
+    margin-bottom: 20px;
+}
+
+.visa-search-form form {
+    display: flex;
+    gap: 10px;
+}
+
+.visa-search-form input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.visa-search-form button {
+    padding: 8px 16px;
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.visa-search-form button:hover {
+    background-color: #005177;
+}
+
+/* Nút chuyển đổi chế độ xem */
+.visa-view-toggle {
+    margin-bottom: 20px;
+}
+
+.visa-view-toggle button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0073aa;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.visa-view-toggle button.active {
+    background-color: #005177;
+}
+
+.visa-view-toggle button:hover {
+    background-color: #005177;
+}
+
+
+/* Nút chuyển đổi chế độ sort */
+.visa-view-sort {
+    margin-bottom: 20px;
+}
+
+.visa-view-sort button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0073aa;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top:5px;
+}
+
+.visa-view-sort button.active {
+    background-color: #005177;
+}
+
+.visa-view-sort button:hover {
+    background-color: #005177;
+}
+
+/* Nút sắp xếp */
+.visa-sort-buttons {
+    margin-bottom: 20px;
+}
+
+.visa-sort-buttons a {
+    margin-right: 15px;
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.visa-sort-buttons a:hover {
+    text-decoration: underline;
+}
+
+
+.visa-search-form input[name="search_query"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

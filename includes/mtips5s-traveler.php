@@ -1,19 +1,23 @@
 <?php 
-// Load the Yatch Module
-require_once plugin_dir_path(__FILE__) . 'modules/yatch/class-yatch.php';
-require_once plugin_dir_path(__FILE__) . 'modules/yatch/class-yatch-detail.php';
-require_once plugin_dir_path(__FILE__) . 'modules/yatch/functions-yatch.php';
+// Load the Visa Module
+require_once plugin_dir_path(__FILE__) . 'modules/visa/class-visa.php';
+require_once plugin_dir_path(__FILE__) . 'modules/visa/class-visa-detail.php';
+require_once plugin_dir_path(__FILE__) . 'modules/visa/functions-visa.php';
+require_once plugin_dir_path(__FILE__) . 'modules/visa/class-visa-taxonomy-filter.php';
+require_once plugin_dir_path(__FILE__) . 'modules/visa/class-visa-detail-filter.php';
 
-// Load the Yatch Module
+// Load the Visa Module
 // require_once plugin_dir_path(__FILE__) . 'modules/product/product.php';
 // require_once plugin_dir_path(__FILE__) . 'modules/product/product-detail.php';
 // require_once plugin_dir_path(__FILE__) . 'modules/product/functions.php';
 
-// Initialize the Yatch Module
-if (class_exists('Yatch')) {
+// Initialize the Visa Module
+if (class_exists('Visa')) {
     // Khởi tạo module
-    $yatch_module = new Yatch();
+    $visa_module = new Visa();
 
     // Khởi tạo module
-    $yatch_detail_module = new Yatch_Detail_Shortcode();
+    $visa_detail_module = new Visa_Detail_Shortcode();
+    $visa_taxonomy_filter_module = new  VisaTaxonomyFilter();
+    $visa_detail_filter_module = new  Visa_Detail_Filter_Shortcode();
 }

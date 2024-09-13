@@ -1,0 +1,662 @@
+<?php
+
+if (!defined('ABSPATH')) {
+    die;
+}
+
+class Visa
+{
+
+    public function __construct()
+    {
+        $this->register_hooks();
+        $this->register_ajax_hooks();
+    }
+
+    private function register_hooks()
+    {
+        add_action('init', array($this, 'custom_post_type'));
+        add_action('init', array($this, 'create_visa_taxonomy'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
+
+        // Đăng ký shortcode
+        add_shortcode('visa_list', array($this, 'display_visa_list'));
+
+        // Thêm meta box
+        // add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
+        add_action('add_meta_boxes',  array($this, 'add_visa_sku_meta_box'));
+
+        
+
+        // add_action('save_post', array($this, 'save_meta_boxes'));
+        add_action('save_post', array($this, 'save_visa_sku_meta_box'));
+
+        // Thêm cột tùy chỉnh vào danh sách quản lý
+        add_filter('manage_visa_post_posts_columns', array($this, 'set_custom_columns'));
+        add_action('manage_visa_post_posts_custom_column', array($this, 'custom_column'), 10, 2);
+
+        // Sắp xếp theo cột tùy chỉnh
+        add_filter('manage_edit-visa_post_sortable_columns', array($this, 'sortable_columns'));
+        add_action('pre_get_posts', array($this, 'sort_custom_columns'));
+    }
+
+    private function register_ajax_hooks()
+    {
+        add_action('wp_ajax_visa_search', array($this, 'handle_ajax_search'));
+        add_action('wp_ajax_nopriv_visa_search', array($this, 'handle_ajax_search'));
+    }
+
+    public function sortable_columns($columns)
+    {
+        $columns['star_rating'] = 'star_rating';
+        $columns['review_count'] = 'review_count';
+        $columns['price'] = 'price';
+        $columns['cabin_count'] = 'cabin_count';
+        $columns['adult_count'] = 'adult_count';
+        $columns['children_count'] = 'children_count';
+        $columns['visa_sku'] = 'visa_sku';
+        return $columns;
+    }
+
+    function handle_sort_visa_posts() {
+        // Nhận các tham số từ AJAX request
+        $orderby = isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : 'date';
+        $order = isset($_GET['order']) ? sanitize_text_field($_GET['order']) : 'DESC';
+        $search_query = isset($_GET['search_query']) ? sanitize_text_field($_GET['search_query']) : '';
+        
+        echo $orderby;
+        // Query các bài post theo tiêu chí sắp xếp
+        $args = array(
+            'post_type' => 'visa_post',
+            'orderby' => $orderby,
+            'order' => $order,
+            's' => $search_query,
+        );
+        $query = new WP_Query($args);
+    
+        // Bắt đầu vòng lặp
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                // Hiển thị post theo cách của bạn, ví dụ:
+                echo '<div>' . get_the_title() . '</div>';
+            }
+        } else {
+            echo 'No posts found.';
+        }
+    
+        // Kết thúc và xóa query
+        wp_reset_postdata();
+        wp_die(); // Kết thúc AJAX request
+    }
+
+
+
+    public function custom_post_type()
+    {
+        $labels = array(
+            'name'               => _x('Visas', 'post type general name', 'textdomain'),
+            'singular_name'      => _x('Visa', 'post type singular name', 'textdomain'),
+            'menu_name'          => _x('Visas', 'admin menu', 'textdomain'),
+            'name_admin_bar'     => _x('Visa', 'add new on admin bar', 'textdomain'),
+            'add_new'            => _x('Add New', 'visa', 'textdomain'),
+            'add_new_item'       => __('Add New Visa', 'textdomain'),
+            'new_item'           => __('New Visa', 'textdomain'),
+            'edit_item'          => __('Edit Visa', 'textdomain'),
+            'view_item'          => __('View Visa', 'textdomain'),
+            'all_items'          => __('All Visas', 'textdomain'),
+            'search_items'       => __('Search Visas', 'textdomain'),
+            'parent_item_colon'  => __('Parent Visas:', 'textdomain'),
+            'not_found'          => __('No visas found.', 'textdomain'),
+            'not_found_in_trash' => __('No visas found in Trash.', 'textdomain'),
+        );
+
+        $args = array(
+            'labels'             => $labels,
+            'public'             => true,
+            'publicly_queryable' => true,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'query_var'          => true,
+            'rewrite'            => array('slug' => 'visa'),
+            'capability_type'    => 'post',
+            'has_archive'        => true,
+            'hierarchical'       => false,
+            'menu_position'      => null,
+            'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
+            'taxonomies'  => array('visa_category')
+        );
+
+        register_post_type('visa_post', $args);
+    }
+
+    public function create_visa_taxonomy()
+    {
+        $labels = array(
+            'name'              => _x('Visa Categories', 'taxonomy general name', 'textdomain'),
+            'singular_name'     => _x('Visa Category', 'taxonomy singular name', 'textdomain'),
+            'search_items'      => __('Search Visa Categories', 'textdomain'),
+            'all_items'         => __('All Visa Categories', 'textdomain'),
+            'parent_item'       => __('Parent Visa Category', 'textdomain'),
+            'parent_item_colon' => __('Parent Visa Category:', 'textdomain'),
+            'edit_item'         => __('Edit Visa Category', 'textdomain'),
+            'update_item'       => __('Update Visa Category', 'textdomain'),
+            'add_new_item'      => __('Add New Visa Category', 'textdomain'),
+            'new_item_name'     => __('New Visa Category Name', 'textdomain'),
+            'menu_name'         => __('Visa Categories', 'textdomain'),
+        );
+
+        $args = array(
+            'hierarchical'      => true,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => array('slug' => 'visa-category'),
+        );
+
+        register_taxonomy('visa_category', array('visa_post'), $args);
+    }
+
+    public function enqueue_assets()
+    {
+        wp_enqueue_style('visa-style', plugin_dir_url(__FILE__) . 'assets/css/style.css');
+        wp_enqueue_script('visa-script', plugin_dir_url(__FILE__) . 'assets/js/script.js', array('jquery'), null, true);
+
+        wp_localize_script('visa-script', 'visaAjax', array(
+            'ajax_url' => admin_url('admin-ajax.php')
+        ));
+    }
+
+    // Thêm meta box cho hạng sao, đánh giá, và giá
+    public function add_meta_boxes()
+    {
+        add_meta_box(
+            'visa_meta_box',
+            __('Visa Post Details'),
+            array($this, 'render_meta_box'),
+            'visa_post',
+            'side',
+            'default'
+        );
+    }
+
+    
+
+    // Lưu giá trị SKU khi lưu bài viết
+    function save_visa_sku_meta_box($post_id) {
+        // Kiểm tra nếu không phải là autosave và người dùng có quyền chỉnh sửa
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        if (isset($_POST['visa_sku'])) {
+            $visa_sku = sanitize_text_field($_POST['visa_sku']);
+            update_post_meta($post_id, '_visa_sku', $visa_sku);
+        }
+    }
+
+    // Thêm meta box để nhập SKU
+    function add_visa_sku_meta_box() {
+        add_meta_box(
+            'visa_sku_meta_box',      // ID của meta box
+            __('Visa SKU', 'text-domain'), // Tiêu đề meta box
+            array($this, 'render_visa_sku_meta_box'), // Callback để hiển thị form
+            'visa_post',              // Post type
+            'side',                    // Vị trí hiển thị (side, normal)
+            'high'                     // Độ ưu tiên hiển thị
+        );
+    }
+
+    // Callback để hiển thị form nhập SKU
+    function render_visa_sku_meta_box($post) {
+        // Lấy giá trị SKU hiện tại từ post meta
+        $visa_sku = get_post_meta($post->ID, '_visa_sku', true);
+        ?>
+        <label for="visa_sku"><?php _e('Visa SKU:', 'text-domain'); ?></label>
+        <input type="text" name="visa_sku" id="visa_sku" value="<?php echo esc_attr($visa_sku); ?>" />
+        <?php
+    }
+    
+
+    public function render_meta_box($post)
+    {
+        // Lấy giá trị hiện tại của các trường
+        $star_rating = get_post_meta($post->ID, '_visa_star_rating', true);
+        $review_count = get_post_meta($post->ID, '_visa_review_count', true);
+        $price = get_post_meta($post->ID, '_visa_price', true);
+        $cabin_count = get_post_meta($post->ID, '_visa_cabin_count', true);
+        $adult_count = get_post_meta($post->ID, '_visa_adult_count', true);
+        $children_count = get_post_meta($post->ID, '_visa_children_count', true);
+
+        // Render các trường trong meta box
+?>
+        <label for="visa_star_rating"><?php _e('Star Rating'); ?></label>
+        <input style="width:150px !important;" type="number" id="visa_star_rating" name="visa_star_rating" value="<?php echo esc_attr($star_rating); ?>" min="1" max="5" step="0.5">
+        <br />
+        <label for="visa_review_count"><?php _e('Review Count'); ?></label>
+        <input style="width:150px !important;" type="number" id="visa_review_count" name="visa_review_count" value="<?php echo esc_attr($review_count); ?>">
+        <br />
+        <label for="visa_price"><?php _e('Price'); ?></label>
+        <input style="width:150px !important;" type="number" id="visa_price" name="visa_price" value="<?php echo esc_attr($price); ?>" step="0.01">
+        <br />
+        <label for="visa_cabin_count"><?php _e('Cabin Count'); ?></label>
+        <input style="width:150px !important;" type="number" id="visa_cabin_count" name="visa_cabin_count" value="<?php echo esc_attr($cabin_count); ?>">
+        <br />
+        <label for="visa_adult_count"><?php _e('Adult Count'); ?></label>
+        <input style="width:150px !important;" type="number" id="visa_adult_count" name="visa_adult_count" value="<?php echo esc_attr($adult_count); ?>">
+        <br />
+        <label for="visa_children_count"><?php _e('Children Count'); ?></label>
+        <input style="width:150px !important;" type="number" id="visa_children_count" name="visa_children_count" value="<?php echo esc_attr($children_count); ?>">
+    <?php
+    }
+
+
+    public function save_meta_boxes($post_id)
+    {
+        if (array_key_exists('visa_star_rating', $_POST)) {
+            update_post_meta($post_id, '_visa_star_rating', sanitize_text_field($_POST['visa_star_rating']));
+        }
+        if (array_key_exists('visa_review_count', $_POST)) {
+            update_post_meta($post_id, '_visa_review_count', sanitize_text_field($_POST['visa_review_count']));
+        }
+        if (array_key_exists('visa_price', $_POST)) {
+            update_post_meta($post_id, '_visa_price', sanitize_text_field($_POST['visa_price']));
+        }
+        if (array_key_exists('visa_cabin_count', $_POST)) {
+            update_post_meta($post_id, '_visa_cabin_count', sanitize_text_field($_POST['visa_cabin_count']));
+        }
+        if (array_key_exists('visa_adult_count', $_POST)) {
+            update_post_meta($post_id, '_visa_adult_count', sanitize_text_field($_POST['visa_adult_count']));
+        }
+        if (array_key_exists('visa_children_count', $_POST)) {
+            update_post_meta($post_id, '_visa_children_count', sanitize_text_field($_POST['visa_children_count']));
+        }
+    }
+
+
+
+    // Thêm cột tùy chỉnh vào danh sách quản lý
+    public function set_custom_columns($columns)
+    {
+        $columns['star_rating'] = __('Star Rating');
+        $columns['review_count'] = __('Review Count');
+        $columns['price'] = __('Price');
+        $columns['cabin_count'] = __('Cabin Count');
+        $columns['adult_count'] = __('Adult Count');
+        $columns['children_count'] = __('Children Count');
+        // Chèn cột SKU sau cột tiêu đề
+        $columns['visa_sku'] =__('SKU', 'text-domain');
+        return $columns;
+    }
+
+
+    public function custom_column($column, $post_id)
+    {
+        switch ($column) {
+            case 'star_rating':
+                $star_rating = get_post_meta($post_id, '_visa_star_rating', true);
+                echo esc_html($star_rating);
+                break;
+            case 'review_count':
+                $review_count = get_post_meta($post_id, '_visa_review_count', true);
+                echo esc_html($review_count);
+                break;
+            case 'price':
+                $price = get_post_meta($post_id, '_visa_price', true);
+                echo esc_html($price);
+                break;
+            case 'cabin_count':
+                $cabin_count = get_post_meta($post_id, '_visa_cabin_count', true);
+                echo esc_html($cabin_count);
+                break;
+            case 'adult_count':
+                $adult_count = get_post_meta($post_id, '_visa_adult_count', true);
+                echo esc_html($adult_count);
+                break;
+            case 'children_count':
+                $children_count = get_post_meta($post_id, '_visa_children_count', true);
+                echo esc_html($children_count);
+                break;
+            case 'visa_sku':
+                $visa_sku = get_post_meta($post_id, '_visa_sku', true);
+                echo esc_html($visa_sku);
+                break;
+        }
+    }
+
+
+
+    // Đặt cột tùy chỉnh là sortable
+    public function sort_custom_columns($query)
+    {
+        if (!is_admin() || !$query->is_main_query()) {
+            return;
+        }
+
+        $orderby = $query->get('orderby');
+
+        if ('star_rating' === $orderby) {
+            $query->set('meta_key', '_visa_star_rating');
+            $query->set('orderby', 'meta_value_num');
+        } elseif ('review_count' === $orderby) {
+            $query->set('meta_key', '_visa_review_count');
+            $query->set('orderby', 'meta_value_num');
+        } elseif ('price' === $orderby) {
+            $query->set('meta_key', '_visa_price');
+            $query->set('orderby', 'meta_value_num');
+        } elseif ('cabin_count' === $orderby) {
+            $query->set('meta_key', '_visa_cabin_count');
+            $query->set('orderby', 'meta_value_num');
+        } elseif ('adult_count' === $orderby) {
+            $query->set('meta_key', '_visa_adult_count');
+            $query->set('orderby', 'meta_value_num');
+        } elseif ('children_count' === $orderby) {
+            $query->set('meta_key', '_visa_children_count');
+            $query->set('orderby', 'meta_value_num');
+        }
+    }
+
+
+
+    // Hàm hiển thị danh sách post dưới dạng shortcode với chế độ list/grid và sắp xếp
+    public function display_visa_list($atts)
+    {
+        // Xử lý các tham số shortcode
+        $atts = shortcode_atts(
+            array(
+                'posts_per_page' => 5,
+                'view'           => 'list', // Chế độ mặc định là list
+                'orderby'        => 'date', // Sắp xếp theo ngày đăng
+                'order'          => 'DESC', // Thứ tự giảm dần
+            ),
+            $atts,
+            'visa_list'
+        );
+
+        // Lấy các tham số từ URL nếu có
+        $orderby = isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : $atts['orderby'];
+        $order = isset($_GET['order']) ? strtoupper(sanitize_text_field($_GET['order'])) : $atts['order'];
+        $search_query = isset($_GET['search_query']) ? sanitize_text_field($_GET['search_query']) : '';
+
+        // Xác định meta_key dựa trên giá trị của orderby
+        $meta_key = $this->get_meta_key($orderby);
+
+        // Cấu hình các tham số cho WP_Query
+        $query_args = array(
+            'post_type'      => 'visa_post',
+            'posts_per_page' => $atts['posts_per_page'],
+            'meta_key'       => $meta_key,
+            'orderby'        => $meta_key ? 'meta_value_num' : $orderby,
+            'order'          => $order,
+            's'              => $search_query, // Thêm từ khóa tìm kiếm vào truy vấn
+        );
+
+        // Thêm điều kiện sắp xếp cho các cột cabin_count, adult_count, children_count
+        if (in_array($orderby, array('cabin_count', 'adult_count', 'children_count'))) {
+            $query_args['meta_key'] = '_visa_' . $orderby;
+            $query_args['orderby'] = 'meta_value_num';
+        }
+
+        $query = new WP_Query($query_args);
+
+        ob_start();
+
+        // Thêm form tìm kiếm
+        $this->render_search_form($search_query);
+
+        // Thêm nút chuyển đổi chế độ hiển thị
+        $this->render_view_toggle($atts['view']);
+
+        // Thêm các nút sắp xếp
+        $this->render_sort_buttons($order, $search_query);
+
+        // Hiển thị danh sách các bài viết
+        $this->render_posts($query, $atts['view']);
+
+        return ob_get_clean();
+    }
+
+
+    private function get_meta_key($orderby)
+    {
+        switch ($orderby) {
+            case 'star_rating':
+                return '_visa_star_rating';
+            case 'review_count':
+                return '_visa_review_count';
+            case 'price':
+                return '_visa_price';
+            case 'cabin_count':
+                return '_visa_cabin_count';
+            case 'adult_count':
+                return '_visa_adult_count';
+            case 'children_count':
+                return '_visa_children_count';
+            default:
+                return '';
+        }
+    }
+
+
+    private function render_search_form($search_query)
+    {
+        echo '<div class="visa-search-form">';
+        echo '<form id="visa-search-form" method="get">';
+        echo '<input type="text" name="search_query" placeholder="' . esc_attr__('Search...', 'text-domain') . '" value="' . esc_attr($search_query) . '" />';
+?>
+        <input type="hidden" id="sort-order" name="order" value="ASC">
+        <input type="hidden" id="sort-by" name="orderby" value="date">
+
+<?php
+        echo '</form>';
+        echo '</div>';
+    }
+
+    private function render_view_toggle($current_view)
+    {
+        echo '<div class="visa-view-toggle">';
+        echo '<button class="visa-toggle" data-view="list"' . ($current_view === 'list' ? ' ' : '') . '>' . __('List View') . '</button>';
+        echo '<button class="visa-toggle" data-view="grid"' . ($current_view === 'grid' ? ' ' : '') . '>' . __('Grid View') . '</button>';
+        echo '</div>';
+    }
+
+
+    private function render_sort_buttons($current_order, $search_query)
+    {
+        $sort_fields = array(
+            'date'           => __('Date'),
+            'star_rating'    => __('Star Rating'),
+            'review_count'   => __('Review Count'),
+            'price'          => __('Price'),
+            'cabin_count'    => __('Cabin Count'),
+            'adult_count'    => __('Adult Count'),
+            'children_count' => __('Children Count'),
+        );
+
+        echo '<div class="visa-view-sort">';
+        foreach ($sort_fields as $field => $label) {
+            $order = ($current_order === 'ASC') ? 'DESC' : 'ASC';
+            echo '<button class="sort-button" data-orderby="' . esc_attr($field) . '" data-order="' . esc_attr($order) . '" data-search-query="' . esc_attr($search_query) . '">' . esc_html($label) . '</button> | ';
+        }
+        echo '</div>';
+    }
+
+
+    private function render_posts($query, $view)
+    {
+        if ($query->have_posts()) {
+            echo '<div class="visa-posts visa-' . esc_attr($view) . '-view">';
+            while ($query->have_posts()) {
+                $query->the_post();
+                $this->render_post_item();
+            }
+            echo '</div>';
+            wp_reset_postdata();
+        } else {
+            echo '<p>' . __('No posts found.') . '</p>';
+        }
+    }
+
+
+
+    private function render_post_item()
+    {
+        $star_rating = get_post_meta(get_the_ID(), '_visa_star_rating', true);
+        $review_count = get_post_meta(get_the_ID(), '_visa_review_count', true);
+        $price = get_post_meta(get_the_ID(), '_visa_price', true);
+        $cabin_count = get_post_meta(get_the_ID(), '_visa_cabin_count', true);
+        $adult_count = get_post_meta(get_the_ID(), '_visa_adult_count', true);
+        $children_count = get_post_meta(get_the_ID(), '_visa_children_count', true);
+    ?>
+
+
+
+        <?php
+        echo '<div class="visa-post-item">';
+        ?>
+        <h2>
+            <a href="<?php echo esc_url(add_query_arg('visa_slug', get_post_field('post_name', get_the_ID()), '/visa-detail')); ?>">
+                <?php the_title(); ?>
+            </a>
+        </h2>
+
+        <?php
+        if (has_post_thumbnail()) {
+            echo get_the_post_thumbnail(get_the_ID(), 'medium');
+        }
+        // echo '<h2>' . get_the_title() . '</h2>';
+        echo '</a>';
+        echo '<p>' . __('Star Rating: ') . esc_html($star_rating) . '</p>';
+        echo '<p>' . __('Review Count: ') . esc_html($review_count) . '</p>';
+        echo '<p>' . __('Price: $') . esc_html($price) . '</p>';
+        echo '<p>' . __('Cabins: ') . esc_html($cabin_count) . '</p>';
+        echo '<p>' . __('Adults: ') . esc_html($adult_count) . '</p>';
+        echo '<p>' . __('Children: ') . esc_html($children_count) . '</p>';
+        echo '<p>' . get_the_excerpt() . '</p>'; // Hiển thị nội dung tóm tắt
+        echo '</div>';
+    }
+
+
+
+
+    public function handle_ajax_search()
+    {
+        $atts = array(
+            'posts_per_page' => 5,
+            'view'           => 'list',
+            'orderby'        => isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : 'date',
+            'order'          => isset($_GET['order']) ? strtoupper(sanitize_text_field($_GET['order'])) : 'DESC',
+        );
+
+        $search_query = isset($_GET['search_query']) ? sanitize_text_field($_GET['search_query']) : '';
+        $meta_query = array('relation' => 'OR');
+
+        if (!empty($search_query)) {
+            $meta_query[] = array(
+                'key'     => '_visa_star_rating',
+                'value'   => $search_query,
+                'compare' => 'LIKE',
+                'type'    => 'NUMERIC'
+            );
+        }
+
+        if (!empty($search_query)) {
+            $meta_query[] = array(
+                'key'     => '_visa_review_count',
+                'value'   => $search_query,
+                'compare' => 'LIKE',
+                'type'    => 'NUMERIC'
+            );
+        }
+
+        if (!empty($search_query)) {
+            $meta_query[] = array(
+                'key'     => '_visa_price',
+                'value'   => $search_query,
+                'compare' => 'LIKE',
+                'type'    => 'NUMERIC'
+            );
+        }
+
+        
+
+        $meta_key = '';
+        if ($atts['orderby'] === 'star_rating') {
+            $meta_key = '_visa_star_rating';
+        } elseif ($atts['orderby'] === 'review_count') {
+            $meta_key = '_visa_review_count';
+        } elseif ($atts['orderby'] === 'price') {
+            $meta_key = '_visa_price';
+        } elseif ($atts['orderby'] === 'cabin_count') {
+            $meta_key = '_visa_cabin_count';
+        } elseif ($atts['orderby'] === 'adult_count') {
+            $meta_key = '_visa_adult_count';
+        } elseif ($atts['orderby'] === 'children_count') {
+            $meta_key = '_visa_children_count';
+        }
+
+        // Tạo một hàm tùy chỉnh để thay đổi điều kiện WHERE của truy vấn
+        $custom_posts_where = function ($where) use ($search_query) {
+            global $wpdb;
+        
+            // Nếu search_query không có giá trị, thêm điều kiện mặc định vào WHERE
+            if (empty($search_query)) {
+                // Điều kiện mặc định để lấy tất cả bài viết của post_type 'visa_post'
+                $where .= $wpdb->prepare(" AND {$wpdb->posts}.post_type = %s", 'visa_post');
+            } else {
+                // Nếu có search_query, tìm kiếm trong tiêu đề bài viết
+                $where .= $wpdb->prepare(" OR {$wpdb->posts}.post_title LIKE %s", '%' . $wpdb->esc_like($search_query) . '%');
+                $where .= $wpdb->prepare(" AND {$wpdb->posts}.post_type = %s", 'visa_post');
+            }
+        
+            return $where;
+        };
+
+        add_filter('posts_where', $custom_posts_where);
+        
+        // echo '<pre>';
+        // print_r($meta_query);
+        // echo '</pre>';
+
+
+        $query_args = array(
+            'post_type'      => 'visa_post',
+            'posts_per_page' => $atts['posts_per_page'],
+            'meta_key'       => $meta_key,
+            'orderby'        => $meta_key ? 'meta_value_num' : $atts['orderby'],
+            'order'          => $atts['order'],
+            'meta_query'     => $meta_query,
+        );
+        
+
+        $query = new WP_Query($query_args);
+        // echo '<pre>'; print_r($query_args ); echo '</pre>';
+
+        // Loại bỏ filter sau khi sử dụng để không ảnh hưởng đến các truy vấn khác
+        remove_filter('posts_where', $custom_posts_where);
+
+
+        ob_start();
+
+
+        // Thêm form tìm kiếm
+        // $this->render_search_form($search_query);
+
+        // Thêm nút chuyển đổi chế độ hiển thị
+        // $this->render_view_toggle($atts['view']);
+
+        // Thêm các nút sắp xếp
+        // $this->render_sort_buttons($atts['order'], $search_query);
+
+        // Hiển thị danh sách các bài viết
+        $this->render_posts($query, $atts['view']);
+
+        wp_reset_postdata();
+        echo ob_get_clean();
+        wp_die();
+    }
+
+}
+
+

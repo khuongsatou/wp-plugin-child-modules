@@ -20,24 +20,24 @@ class Visa
         add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
 
         // Đăng ký shortcode
-        add_shortcode('visa_list', array($this, 'display_visa_list'));
+        // add_shortcode('visa_list', array($this, 'display_visa_list'));
 
         // Thêm meta box
         // add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
-        add_action('add_meta_boxes',  array($this, 'add_visa_sku_meta_box'));
+        // add_action('add_meta_boxes',  array($this, 'add_visa_sku_meta_box'));
 
         
 
         // add_action('save_post', array($this, 'save_meta_boxes'));
-        add_action('save_post', array($this, 'save_visa_sku_meta_box'));
+        // add_action('save_post', array($this, 'save_visa_sku_meta_box'));
 
         // Thêm cột tùy chỉnh vào danh sách quản lý
-        add_filter('manage_visa_post_posts_columns', array($this, 'set_custom_columns'));
-        add_action('manage_visa_post_posts_custom_column', array($this, 'custom_column'), 10, 2);
+        // add_filter('manage_visa_post_posts_columns', array($this, 'set_custom_columns'));
+        // add_action('manage_visa_post_posts_custom_column', array($this, 'custom_column'), 10, 2);
 
         // Sắp xếp theo cột tùy chỉnh
-        add_filter('manage_edit-visa_post_sortable_columns', array($this, 'sortable_columns'));
-        add_action('pre_get_posts', array($this, 'sort_custom_columns'));
+        // add_filter('manage_edit-visa_post_sortable_columns', array($this, 'sortable_columns'));
+        // add_action('pre_get_posts', array($this, 'sort_custom_columns'));
     }
 
     private function register_ajax_hooks()

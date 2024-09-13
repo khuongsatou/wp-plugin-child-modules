@@ -172,20 +172,13 @@ class VisaTaxonomyFilter
                 <label for="duration"><?php _e('Duration:', 'textdomain'); ?></label>
                 <input type="text" id="duration" name="duration" value="<?php echo esc_attr($duration); ?>" />
             </p>
-            <p>
-                <label for="valid_until"><?php _e('Valid Until:', 'textdomain'); ?></label>
-                <input type="date" id="valid_until" name="valid_until" value="<?php echo esc_attr($valid_until); ?>" />
-            </p>
-            <p>
-                <label for="country"><?php _e('Country:', 'textdomain'); ?></label>
-                <input type="text" id="country" name="country" value="<?php echo esc_attr($country); ?>" />
-            </p>
+
             <p>
                 <label for="visa_processing_time"><?php _e('Visa processing time:', 'textdomain'); ?></label>
                 <input type="number" id="visa_processing_time" name="visa_processing_time" value="<?php echo esc_attr($visa_processing_time); ?>" />
             </p>
             <p>
-                <label for="visa_max_stay"><?php _e('Visa max ttay:', 'textdomain'); ?></label>
+                <label for="visa_max_stay"><?php _e('Visa max stay:', 'textdomain'); ?></label>
                 <input type="number" id="visa_max_stay" name="visa_max_stay" value="<?php echo esc_attr($visa_max_stay); ?>" />
             </p>
             <p>
